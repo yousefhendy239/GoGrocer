@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+@plugin "daisyui";
+
+:root {
+  color-scheme: light;
+
+  --brand-primary: #194d33;
+  --brand-secondary: #397c55;
+  --brand-accent: #f07c45;
+
+  --background: #fffdf7;
+  --surface: #ffffff;
+
+  --text-primary: #183d2a;
+  --text-secondary: #496354;
+  --border: #d8dfd6;
+}
+
+/* Dark Mode */
+.dark {
+  color-scheme: dark;
+
+  --brand-primary: #397c55;
+  --brand-secondary: #49a369;
+  --brand-accent: #ff9360;
+
+  --background: #0d1913;
+  --surface: #14251c;
+
+  --text-primary: #e9efe9;
+  --text-secondary: #a8b9ad;
+  --border: #355541;
+}
+
+/* Tailwind CSS v4 Theme */
+@theme inline {
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-accent: var(--brand-accent);
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border);
+}

@@ -1,6 +1,19 @@
-# GoGrocer
-GoGrocer is an online grocery shopping platform that allows customers to conveniently purchase groceries, beverages, food items, and other daily essentials from the comfort of their homes. The website is designed to save time and effort by providing a simple and efficient alternative to traditional grocery shopping.
+# React + Vite
 
-Users can browse products by category, search for specific items, view product details and prices, explore available offers and discounts, and add their desired products to a shopping cart. They can then proceed to checkout, enter their delivery address, select their preferred payment method, and place their orders. Customers can also track their orders and stay updated on their delivery status.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-The main goal of GoGrocer is to deliver a user-friendly, convenient, and reliable online shopping experience that makes purchasing everyday essentials faster and easier.
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+
+Note: This will impact Vite dev & build performances.
+You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
