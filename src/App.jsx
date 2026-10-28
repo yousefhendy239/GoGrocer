@@ -22,19 +22,19 @@ const App = () => {
       <Header />
 
       <Routes>
-        <Route path="/Aboutus" element={<Aboutus />} />
-        <Route path="/Cart" element={<Cart />} />
-        <Route path="/Checkout" element={<Checkout />} />
-        <Route path="/Contactus" element={<Contactus />} />
+        <Route path="/aboutus" element={<Aboutus />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/contactus" element={<Contactus />} />
         <Route path="/" element={<Homepage />} />
-        <Route path="/Productdetails" element={<Productdetails />} />
-        <Route path="/Products" element={<Products />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/Signin" element={<Signin />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/Tracking" element={<Tracking />} />
-        <Route path="/Visacard" element={<Visacard />} />
-        <Route path="/Error" element={<Error />} />
+        <Route path="/productsdetails" element={<Productdetails />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/tracking" element={<Tracking />} />
+        <Route path="/visacard" element={<Visacard />} />
+        <Route path="/error" element={<Error />} />
       </Routes>
 
       <Footer />
