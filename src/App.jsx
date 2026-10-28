@@ -14,6 +14,7 @@ import Signin from "./pages/signIn/Signin";
 import Signup from "./pages/signUp/Signup";
 import Tracking from "./pages/tracking/Tracking";
 import Visacard from "./pages/visaCard/Visacard";
+import Error from "./pages/error404/Error";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Tracking" element={<Tracking />} />
         <Route path="/Visacard" element={<Visacard />} />
+        <Route path="/Error" element={<Error />} />
       </Routes>
 
       <Footer />
