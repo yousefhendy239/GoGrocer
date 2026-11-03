@@ -1,11 +1,5 @@
-import React from "react";
-
 const Visacard = () => {
-  return (
-    <div>
-      <h1>Visacard</h1>
-    </div>
-  );
+  return <h1>Visacard</h1>;
 };
 
 export default Visacard;
