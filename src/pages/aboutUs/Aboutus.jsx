@@ -1,10 +1,9 @@
-import React from "react";
+import Ourstory from "../../components/aboutus/Ourstory";
 
 const Aboutus = () => {
   return (
-    <div>
-      <h1>Aboutus</h1>
-    </div>
+    <Ourstory/>
+   
   );
 };
 
