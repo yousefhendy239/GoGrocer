@@ -1,7 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 @import "@heroui/styles";
 @plugin "daisyui";
 
+@theme {
+  --font-heading: "DM Serif Display", serif;
+}
+
+body {
+  font-family: "DM Serif Display", serif;
+}
 :root {
   color-scheme: light;
 
