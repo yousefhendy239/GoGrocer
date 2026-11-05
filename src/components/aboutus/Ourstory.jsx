@@ -5,7 +5,7 @@ import { LuLeaf, LuTruck, LuShieldCheck } from "react-icons/lu";
 
 const Ourstory = () => {
   return (
-     <main className="min-h-screen bg-background text-text-primary">
+     <main className=" bg-background text-text-primary">
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 py-16 md:grid-cols-2">
         <div>
           <p className="mb-4 text-xs font-semibold tracking-widest text-brand-secondary">
