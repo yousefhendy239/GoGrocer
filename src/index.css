@@ -54,3 +54,16 @@ body {
   --color-text-secondary: var(--text-secondary);
   --color-border: var(--border);
 }
+@keyframes motorcycleMove {
+  0% {
+    left: -50px;
+  }
+
+  100% {
+    left: 100%;
+  }
+}
+
+.animate-motorcycle {
+  animation: motorcycleMove 10s linear infinite;
+}
