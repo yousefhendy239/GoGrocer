@@ -1,9 +1,9 @@
 import React from "react";
-
+import Trackingmain from "../../components/tracking/Trackingmain";
 const Tracking = () => {
   return (
     <div>
-      <h1>Tracking</h1>
+      <Trackingmain />
     </div>
   );
 };
