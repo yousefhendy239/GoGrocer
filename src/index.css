@@ -23,6 +23,8 @@ body {
   --text-primary: #183d2a;
   --text-secondary: #496354;
   --border: #d8dfd6;
+  --surface-muted: #eef1e8;
+  --star: #e8a23b;
 }
 
 /* Dark Mode */
@@ -39,6 +41,8 @@ body {
   --text-primary: #e9efe9;
   --text-secondary: #a8b9ad;
   --border: #355541;
+  --surface-muted: #1c3326;
+  --star: #f0b45a;
 }
 
 /* Tailwind CSS v4 Theme */
@@ -53,6 +57,8 @@ body {
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
   --color-border: var(--border);
+  --color-surface-muted: var(--surface-muted);
+  --color-star: var(--star);
 }
 @keyframes motorcycleMove {
   0% {
