@@ -46,7 +46,7 @@ const ProductCard = ({ product, onAdd }) => {
             size="sm"
             aria-label={`Add ${name} to cart`}
             onPress={() => onAdd?.(product)}
-            className="size-8 min-w-0 rounded-full bg-forest text-white"
+            className="size-8 min-w-0 rounded-full bg-emerald-950 text-white"
           >
             <FiPlus className="size-4" />
           </Button>
