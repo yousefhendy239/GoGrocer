@@ -24,7 +24,7 @@ const Marketbox = () => {
 
           <Link
             to="/Products"
-            className="mt-7 rounded-full bg-background px-6 py-4 text-sm font-semibold text-brand-primary transition hover:bg-surface"
+            className="mt-7 rounded-full bg-white px-6 py-4 text-sm font-semibold text-brand-primary transition hover:bg-surface"
           >
             Explore the box <span className="ml-2">→</span>
           </Link>
@@ -39,7 +39,7 @@ const Marketbox = () => {
           />
 
           {/* Gradient Shadow */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-brand-accent via-brand-accent/40 to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-r from-brand-accent via-brand-accent/40 to-transparent" />
         </div>
       </div>
     </section>

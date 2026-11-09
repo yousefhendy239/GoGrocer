@@ -16,6 +16,10 @@ body {
   --brand-primary: #194d33;
   --brand-secondary: #397c55;
   --brand-accent: #f07c45;
+  --section-bg: #dde9d5;
+
+  --btn-GrOr: #194d33;
+  --btn-WhOr: #fffdf7;
 
   --background: #fffdf7;
   --surface: #ffffff;
@@ -33,7 +37,11 @@ body {
 
   --brand-primary: #397c55;
   --brand-secondary: #49a369;
-  --brand-accent: #ff9360;
+  --brand-accent: #f07c45;
+  --section-bg: #1c3326;
+
+  --btn-GrOr: #f07c45;
+  --btn-WhOr: #f07c45;
 
   --background: #0d1913;
   --surface: #14251c;
@@ -50,6 +58,10 @@ body {
   --color-brand-primary: var(--brand-primary);
   --color-brand-secondary: var(--brand-secondary);
   --color-brand-accent: var(--brand-accent);
+  --color-section-bg: var(--section-bg);
+
+  --color-btn-GrOr: var(--btn-GrOr);
+  --color-btn-WhOr: var(--btn-WhOr);
 
   --color-background: var(--background);
   --color-surface: var(--surface);
