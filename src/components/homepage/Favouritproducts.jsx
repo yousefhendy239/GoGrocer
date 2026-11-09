@@ -52,14 +52,14 @@ const Favouritproducts = () => {
             Picked for you
           </p>
 
-          <h2 className="font-heading text-4xl text-brand-primary sm:text-5xl">
+          <h2 className="font-heading text-4xl text-text-primary sm:text-5xl">
             This week's favorites
           </h2>
         </div>
 
         <a
           href="/Products"
-          className="hidden font-bold text-brand-primary hover:text-brand-accent sm:block"
+          className="hidden font-bold text-text-primary hover:text-brand-accent sm:block"
         >
           See all products →
         </a>
@@ -75,7 +75,7 @@ const Favouritproducts = () => {
             {/* Image */}
             <div className="relative aspect-[1.15] overflow-hidden rounded-[22px] bg-background">
               {product.badge && (
-                <span className="absolute left-3 top-3 z-10 rounded-full bg-background px-3 py-1 text-xs font-bold text-brand-primary">
+                <span className="absolute left-3 top-3 z-10 rounded-full bg-background px-3 py-1 text-xs font-bold text-text-primary">
                   {product.badge}
                 </span>
               )}
@@ -125,7 +125,7 @@ const Favouritproducts = () => {
 
       {/* Mobile Link */}
       <div className="mt-7 text-center sm:hidden">
-        <a href="/Products" className="font-bold text-brand-primary">
+        <a href="/Products" className="font-bold text-text-primary">
           See all products →
         </a>
       </div>

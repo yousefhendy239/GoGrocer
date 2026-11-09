@@ -32,7 +32,7 @@ const Shopbycategoreis = () => {
           </span>
 
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-heading text-4xl font-normal text-brand-primary md:text-5xl">
+            <h2 className="font-heading text-4xl font-normal text-text-primary md:text-5xl">
               Shop by Aisle
             </h2>
           </div>
@@ -53,15 +53,15 @@ const Shopbycategoreis = () => {
               </div>
 
               <div className="p-4">
-                <h3 className="font-heading text-lg text-brand-primary">
+                <h3 className="font-heading text-lg text-text-primary">
                   {aisle.name}
                 </h3>
 
-                <p className="mt-1 text-xs text-brand-primary">
+                <p className="mt-1 text-xs text-text-primary">
                   {aisle.description}
                 </p>
 
-                <span className="mt-4 inline-block text-sm font-bold text-brand-secondary">
+                <span className="mt-4 inline-block text-sm font-bold text-text-primary">
                   Explore →
                 </span>
               </div>
