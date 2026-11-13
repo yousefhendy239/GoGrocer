@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "../../components/Header";
 import {
   FiMail,
   FiPhone,
@@ -84,8 +83,6 @@ const Contactus = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#1D281E] text-gray-900 dark:text-white transition-colors duration-300">
-      <Header />
-
       <section className="min-h-screen py-12 px-4 flex items-center justify-center">
         <div className="max-w-3xl w-full">
           {/* Main Contact Card */}
