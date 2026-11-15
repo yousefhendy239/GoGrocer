@@ -1,18 +1,19 @@
-import { NavLink, Link, Links } from "react-router-dom";
-import ThemeToggle from "./ThemeToggle";
-import { IoCartSharp } from "react-icons/io5";
-import { IoPersonCircleSharp } from "react-icons/io5";
 
-const Header = () => {
+import { NavLink, Link } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
+import { IoCartSharp, IoPersonCircleSharp } from "react-icons/io5";
+
+const Header = ({ cartCount = 0 }) => {
   const links = [
     { name: "Home", path: "/" },
-    { name: "Products", path: "/Products" },
-    { name: "About us", path: "/Aboutus" },
-    { name: "Contact", path: "/Contactus" },
-    { name: "Sign in", path: "/Signin" },
+    { name: "Products", path: "/products" },
+    { name: "About us", path: "/aboutus" },
+    { name: "Contact", path: "/contactus" },
+    { name: "Sign in", path: "/signin" },
   ];
+
   return (
-    <header className=" sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md">
       <div className="mx-auto flex h-20 max-w-310 items-center justify-between px-5">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
@@ -56,15 +57,21 @@ const Header = () => {
         {/* Actions */}
         <div className="flex items-center gap-3">
           <Link
-            to="/Cart"
-            className="text-2xl rounded-full p-2 text-text-primary transition hover:bg-section-bg"
+            to="/cart"
+            className="relative rounded-full p-2 text-2xl text-text-primary transition hover:bg-section-bg"
           >
             <IoCartSharp />
+
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-xs font-bold text-white">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
           <Link
             to="/profile"
-            className="text-2xl rounded-full p-2 text-text-primary transition hover:bg-section-bg"
+            className="rounded-full p-2 text-2xl text-text-primary transition hover:bg-section-bg"
           >
             <IoPersonCircleSharp />
           </Link>

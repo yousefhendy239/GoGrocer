@@ -1,5 +1,4 @@
-import React from "react";
-import { Button, Chip } from "@heroui/react";
+ import { Button, Chip } from "@heroui/react";
 import { FaStar } from "react-icons/fa";
 import { FiPlus } from "react-icons/fi";
 
