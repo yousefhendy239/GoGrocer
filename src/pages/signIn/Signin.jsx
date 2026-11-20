@@ -298,7 +298,11 @@ export default function SignIn({ onSuccess }) {
     error: show(name),
     onChange: (e) => {
       setValues((v) => ({ ...v, [name]: e.target.value }));
-      setServerFieldError({});
+      setServerFieldError((prev) => {
+  const next = { ...prev };
+  delete next[name];
+  return next;
+});
       setFormError("");
     },
     onBlur: () => setTouched((t) => ({ ...t, [name]: true })),
