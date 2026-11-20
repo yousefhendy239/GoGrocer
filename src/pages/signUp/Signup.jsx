@@ -1,68 +1,33 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import {
+  useAuth,
+  colors,
+  css,
+  Field,
+  FieldError,
+  FormError,
+  UserIcon,
+  CameraIcon,
+  ArrowRight,
+  MAX_IMAGE_MB,
+  MIN_PASSWORD,
+  validateImage,
+  validateSignUp,
+} from "./SignIn";
 
-const Field = ({ label, id, type = "text", placeholder, value, onChange, autoComplete }) => (
-  <div className="flex flex-col gap-2">
-    <label
-      htmlFor={id}
-      className="text-xs font-semibold text-emerald-900"
-      style={{ color: "#496354" }}
-    >
-      {label}
-    </label>
-    <input
-      id={id}
-      name={id}
-      type={type}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      autoComplete={autoComplete}
-      className="w-full rounded-xl border bg-stone-50 px-5 py-4 text-[15px] outline-none transition focus:ring-2 focus:ring-emerald-800/30 placeholder:text-[#8A9A8E]"
-      style={{
-        backgroundColor: "#FFFDF7",
-        borderColor: "#DCE2D9",
-        color: "#183D2A",
-      }}
-    />
-  </div>
-);
+const fileToDataURL = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("Could not read the image."));
+    reader.readAsDataURL(file);
+  });
 
-const UserIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#194D33"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <circle cx="12" cy="8" r="4" />
-    <path d="M4.5 21v-1a6 6 0 0 1 6-6h3a6 6 0 0 1 6 6v1" />
-  </svg>
-);
+export default function SignUp({ onSuccess }) {
+  const { signUp } = useAuth();
+  const fileRef = useRef(null);
 
-const ArrowRight = () => (
-  <svg
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <path d="M5 12h14" />
-    <path d="m13 6 6 6-6 6" />
-  </svg>
-);
-
-export default function CreateAccount() {
-  const [form, setForm] = useState({
+  const [values, setValues] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -71,36 +36,89 @@ export default function CreateAccount() {
     password: "",
   });
   const [agreed, setAgreed] = useState(false);
+  const [avatar, setAvatar] = useState(""); // data URL: used for preview and saved with the user
+  const [avatarError, setAvatarError] = useState("");
+  const [touched, setTouched] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [serverFieldError, setServerFieldError] = useState({});
+  const [submitting, setSubmitting] = useState(false);
 
-  const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
+  const errors = validateSignUp({ ...values, agreed });
+  const show = (name) => (touched[name] || submitted ? errors[name] || serverFieldError[name] : "");
 
-  const handleSubmit = () => {
-    if (!agreed || form.password.length < 6) return;
-    console.log("Create account", form);
+  const bind = (name) => ({
+    value: values[name],
+    error: show(name),
+    onChange: (e) => {
+      setValues((v) => ({ ...v, [name]: e.target.value }));
+      setServerFieldError({});
+      setFormError("");
+    },
+    onBlur: () => setTouched((t) => ({ ...t, [name]: true })),
+  });
+
+  const handleImage = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    const problem = validateImage(file);
+    if (problem) {
+      setAvatarError(problem);
+      return;
+    }
+    try {
+      setAvatar(await fileToDataURL(file));
+      setAvatarError("");
+    } catch (err) {
+      setAvatarError(err.message);
+    }
   };
 
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center bg-stone-50 px-4 py-10"
-      style={{ backgroundColor: "#FFFDF7" }}
-    >
-      <div
-        className="w-full max-w-[640px] rounded-3xl bg-[#E8ECDF] p-8"
-        style={{ backgroundColor: "#E8ECDF", border: "1px solid #DCE2D9" }}
-      >
-        {/* Icon */}
-        <div
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-[#DCE9D4]"
-          style={{ backgroundColor: "#DCE9D4" }}
-        >
-          <UserIcon />
-        </div>
+  const removeImage = () => {
+    setAvatar("");
+    setAvatarError("");
+  };
 
-        {/* Heading */}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setFormError("");
+    if (Object.keys(errors).length) return;
+
+    setSubmitting(true);
+    try {
+      const user = await signUp({
+        ...values,
+        firstName: values.firstName.trim(),
+        lastName: values.lastName.trim(),
+        email: values.email.trim(),
+        phone: values.phone.trim(),
+        address: values.address.trim(),
+        avatar,
+      });
+      onSuccess?.(user);
+    } catch (err) {
+      if (err.field === "avatar") setAvatarError(err.message);
+      else if (err.field) setServerFieldError({ [err.field]: err.message });
+      else setFormError(err.message || "Something went wrong. Try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const termsError = show("terms");
+
+  return (
+    <div className="flex min-h-screen items-center justify-center px-4 py-10" style={{ backgroundColor: colors.page }}>
+      <style>{css}</style>
+
+      <div className="w-full max-w-[640px] rounded-3xl p-8" style={{ backgroundColor: colors.card, border: `1px solid ${colors.border}` }}>
         <h1
-          className="mt-8 font-bold tracking-tight text-emerald-950"
+          className="font-bold tracking-tight"
           style={{
-            color: "#183D2A",
+            color: colors.title,
             fontFamily: "'DM Serif Display', 'Playfair Display', Georgia, 'Times New Roman', serif",
             fontSize: "2.6rem",
             lineHeight: 1.1,
@@ -109,103 +127,109 @@ export default function CreateAccount() {
         >
           Create account
         </h1>
-        <p className="mt-3 text-[15px]" style={{ color: "#68746C" }}>
+        <p className="mt-3 text-[15px]" style={{ color: colors.muted }}>
           It only takes a minute.
         </p>
 
-        {/* Fields */}
-        <div className="mt-8 flex flex-col gap-5">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            <Field
-              label="First name"
-              id="firstName"
-              placeholder="Jamie"
-              value={form.firstName}
-              onChange={set("firstName")}
-              autoComplete="given-name"
-            />
-            <Field
-              label="Last name"
-              id="lastName"
-              placeholder="Green"
-              value={form.lastName}
-              onChange={set("lastName")}
-              autoComplete="family-name"
-            />
+        {/* Profile photo */}
+        <div className="mt-8 flex items-center gap-5">
+          <div
+            className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full"
+            style={{ backgroundColor: colors.badge, color: colors.green }}
+          >
+            {avatar ? <img src={avatar} alt="Your profile photo" className="h-full w-full object-cover" /> : <UserIcon size={32} />}
           </div>
 
-          <Field
-            label="Email address"
-            id="email"
-            type="email"
-            placeholder="you@example.com"
-            value={form.email}
-            onChange={set("email")}
-            autoComplete="email"
-          />
-          <Field
-            label="Phone number"
-            id="phone"
-            type="tel"
-            placeholder="(555) 014-2026"
-            value={form.phone}
-            onChange={set("phone")}
-            autoComplete="tel"
-          />
-          <Field
-            label="Delivery address"
-            id="address"
-            placeholder="24 Market Lane, Greenfield"
-            value={form.address}
-            onChange={set("address")}
-            autoComplete="street-address"
-          />
-          <Field
-            label="Password"
-            id="password"
-            type="password"
-            placeholder="At least 6 characters"
-            value={form.password}
-            onChange={set("password")}
-            autoComplete="new-password"
-          />
-
-          {/* Terms */}
-          <label className="mt-1 flex cursor-pointer items-center gap-3">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={(e) => setAgreed(e.target.checked)}
-              className="h-5 w-5 shrink-0 cursor-pointer rounded-md border accent-emerald-900"
-              style={{ borderColor: "#8A9A8E", accentColor: "#194D33" }}
-            />
-            <span className="text-xs font-semibold" style={{ color: "#496354" }}>
-              I agree to the Terms of Service and Privacy Policy.
-            </span>
-          </label>
-
-          {/* Submit */}
           <div>
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="inline-flex items-center gap-3 rounded-full bg-emerald-900 px-7 py-4 text-base font-bold text-white transition hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-800/50 focus-visible:ring-offset-2"
-              style={{ backgroundColor: "#194D33", color: "#FFFFFF" }}
-            >
-              Create account
-              <ArrowRight />
-            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                className="gg-ghost inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold"
+                style={{ borderColor: colors.green, color: colors.green }}
+              >
+                <CameraIcon />
+                {avatar ? "Change photo" : "Add photo"}
+              </button>
+              {avatar && (
+                <button type="button" onClick={removeImage} className="gg-ghost text-xs font-semibold hover:underline" style={{ color: colors.muted }}>
+                  Remove
+                </button>
+              )}
+            </div>
+            <p className="mt-2 text-xs" style={{ color: colors.muted }}>
+              Optional. JPG, PNG or WebP, up to {MAX_IMAGE_MB} MB.
+            </p>
+            <FieldError id="avatar-error">{avatarError}</FieldError>
           </div>
+
+          <input
+            ref={fileRef}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handleImage}
+            className="hidden"
+            aria-label="Upload profile photo"
+          />
         </div>
 
-        {/* Footer */}
-        <p className="mt-8 text-center text-[15px]" style={{ color: "#68746C" }}>
+        <div className="mt-6">
+          <FormError>{formError}</FormError>
+        </div>
+
+        <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <Field id="firstName" label="First name" placeholder="Jamie" autoComplete="given-name" {...bind("firstName")} />
+            <Field id="lastName" label="Last name" placeholder="Green" autoComplete="family-name" {...bind("lastName")} />
+          </div>
+
+          <Field id="email" label="Email address" type="email" placeholder="you@example.com" autoComplete="email" {...bind("email")} />
+          <Field id="phone" label="Phone number" type="tel" placeholder="(555) 014-2026" autoComplete="tel" {...bind("phone")} />
+          <Field id="address" label="Delivery address" placeholder="24 Market Lane, Greenfield" autoComplete="street-address" {...bind("address")} />
+          <Field
+            id="password"
+            label="Password"
+            type="password"
+            placeholder={`At least ${MIN_PASSWORD} characters, with a letter and a number`}
+            autoComplete="new-password"
+            {...bind("password")}
+          />
+
+          <div>
+            <label className="flex cursor-pointer items-center gap-3">
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                onBlur={() => setTouched((t) => ({ ...t, terms: true }))}
+                aria-invalid={termsError ? "true" : "false"}
+                aria-describedby={termsError ? "terms-error" : undefined}
+                className="gg-check h-5 w-5 shrink-0 cursor-pointer rounded-md"
+                style={{ accentColor: colors.green }}
+              />
+              <span className="text-xs font-semibold" style={{ color: colors.label }}>
+                I agree to the Terms of Service and Privacy Policy.
+              </span>
+            </label>
+            <FieldError id="terms-error">{termsError}</FieldError>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={submitting}
+              className="gg-btn inline-flex items-center gap-3 rounded-full px-7 py-4 text-base font-bold text-white transition"
+              style={{ backgroundColor: colors.green }}
+            >
+              {submitting ? "Creating account…" : "Create account"}
+              {!submitting && <ArrowRight />}
+            </button>
+          </div>
+        </form>
+
+        <p className="mt-8 text-center text-[15px]" style={{ color: colors.muted }}>
           Already have an account?{" "}
-          <a
-            href="#"
-            className="font-medium hover:underline"
-            style={{ color: "#397C55" }}
-          >
+          <a href="/signin" className="font-medium hover:underline" style={{ color: colors.link }}>
             Sign in
           </a>
         </p>
