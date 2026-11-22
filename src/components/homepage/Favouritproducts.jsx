@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Favouritproducts = ({ onAdd }) => {
   const favourites = [
     {
@@ -120,12 +122,6 @@ const Favouritproducts = ({ onAdd }) => {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-7 text-center sm:hidden">
-        <a href="/Products" className="font-bold text-text-primary">
-          See all products →
-        </a>
       </div>
     </section>
   );

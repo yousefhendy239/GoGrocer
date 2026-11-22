@@ -1,9 +1,8 @@
-
 import { NavLink, Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import { IoCartSharp, IoPersonCircleSharp } from "react-icons/io5";
 
-const Header = ({ cartCount = 0 }) => {
+const Header = () => {
   const links = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/products" },
@@ -61,12 +60,6 @@ const Header = ({ cartCount = 0 }) => {
             className="relative rounded-full p-2 text-2xl text-text-primary transition hover:bg-section-bg"
           >
             <IoCartSharp />
-
-            {cartCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-accent px-1 text-xs font-bold text-white">
-                {cartCount}
-              </span>
-            )}
           </Link>
 
           <Link
