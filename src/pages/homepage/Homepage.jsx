@@ -3,12 +3,12 @@ import Shopbycategoreis from "../../components/homepage/Shopbycategoreis";
 import Favouritproducts from "../../components/homepage/Favouritproducts";
 import Marketbox from "../../components/homepage/Marketbox";
 
-const Homepage = ({ onAdd }) => {
+const Homepage = () => {
   return (
     <div className="p-3.5 bg-background">
       <Introduction />
       <Shopbycategoreis />
-      <Favouritproducts onAdd={onAdd} />
+      <Favouritproducts />
       <Marketbox />
     </div>
   );
