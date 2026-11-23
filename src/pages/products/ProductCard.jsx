@@ -6,24 +6,18 @@ import { CartMainContext } from "../../context/CartContext";
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useContext(CartMainContext);
-  // 1) الداتا الموجودة في fakestoreapi
+
   const { id, title, category, price, image } = product;
 
-  // 2) الـ rating في fakestoreapi object ({ rate, count })
-  //    بس في الـ API بتاعك ممكن يبقى رقم، فبنتعامل مع الحالتين
   const rating =
     typeof product.rating === "object" ? product.rating.rate : product.rating;
 
-  // 3) الداتا الناقصة: قيم static تتبدل لوحدها لما الـ API يبعتها
   const { unit = "each" } = product;
 
-  // badge تجريبي: لو التقييم 4 فأكتر يظهر Bestseller
-  // (لما الـ API بتاعك يبعت badge حقيقي هيتستخدم هو)
   const badge = product.badge ?? (rating >= 4 ? "Bestseller" : null);
 
   return (
     <article className="rounded-2xl border border-border bg-surface p-2 shadow-sm">
-      {/* الصورة + الـ badge */}
       <Link
         to={`/products/${id}`}
         className="relative block aspect-square overflow-hidden rounded-xl bg-white"
@@ -43,7 +37,6 @@ const ProductCard = ({ product }) => {
       </Link>
 
       <div className="space-y-1 px-2 pb-2 pt-3">
-        {/* القسم + التقييم */}
         <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wide text-text-secondary">
           <span className="truncate">{category}</span>
           <span className="flex items-center gap-1 text-star">
@@ -52,14 +45,12 @@ const ProductCard = ({ product }) => {
           </span>
         </div>
 
-        {/* الاسم */}
         <h3 className="line-clamp-1 text-sm font-medium text-text-primary">
           <Link to={`/products/${id}`} className="hover:underline">
             {title}
           </Link>
         </h3>
 
-        {/* السعر + الزرار */}
         <div className="flex items-center justify-between pt-1">
           <p className="text-sm font-bold text-text-primary">
             ${price.toFixed(2)}{" "}
