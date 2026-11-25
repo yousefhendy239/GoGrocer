@@ -1,49 +1,9 @@
+import { useContext } from "react";
+import { ProductsMainContext } from "../../context/ProductContext";
 import { Link } from "react-router-dom";
 
-const Favouritproducts = ({ onAdd }) => {
-  const favourites = [
-    {
-      id: 1,
-      name: "Creamy Avocado",
-      category: "Fruits",
-      price: 2.49,
-      unit: "each",
-      rating: 4.9,
-      badge: "Bestseller",
-      image: "../Avocado.avif",
-    },
-    {
-      id: 2,
-      name: "Garden Harvest",
-      category: "Vegetables",
-      price: 6.25,
-      unit: "bundle",
-      rating: 4.8,
-      badge: "Farm fresh",
-      image: "../Avocado.avif",
-    },
-    {
-      id: 3,
-      name: "Orchard Mix",
-      category: "Fruits",
-      price: 5.95,
-      unit: "box",
-      rating: 4.7,
-      badge: "",
-      image: "../Avocado.avif",
-    },
-    {
-      id: 4,
-      name: "Country Sourdough",
-      category: "Bakery",
-      price: 4.75,
-      unit: "loaf",
-      rating: 4.9,
-      badge: "Baked today",
-      image: "../Avocado.avif",
-    },
-  ];
-
+const Favouritproducts = () => {
+  const { getHighestRatedProducts } = useContext(ProductsMainContext);
   return (
     <section className="page-section px-6 py-20 md:px-12 lg:px-20">
       <div className="mb-8 flex items-end justify-between">
@@ -57,21 +17,21 @@ const Favouritproducts = ({ onAdd }) => {
           </h2>
         </div>
 
-        <a
-          href="/Products"
+        <Link
+          to="/products"
           className="hidden font-bold text-text-primary hover:text-brand-accent sm:block"
         >
           See all products →
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {favourites.map((product) => (
+        {getHighestRatedProducts.map((product) => (
           <div
             key={product.id}
             className="group rounded-[26px] border border-border bg-surface p-2 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
-            <div className="relative aspect-[1.15] overflow-hidden rounded-[22px] bg-background">
+            <div className="relative aspect-[1.15] overflow-hidden rounded-[22px] bg-white p-4">
               {product.badge && (
                 <span className="absolute left-3 top-3 z-10 rounded-full bg-background px-3 py-1 text-xs font-bold text-text-primary">
                   {product.badge}
@@ -80,8 +40,8 @@ const Favouritproducts = ({ onAdd }) => {
 
               <img
                 src={product.image}
-                alt={product.name}
-                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                alt={product.title}
+                className="h-full w-full transition duration-500 group-hover:scale-105"
               />
             </div>
 
@@ -92,7 +52,7 @@ const Favouritproducts = ({ onAdd }) => {
                 </span>
 
                 <span className="text-xs font-bold text-brand-accent">
-                  ★ {product.rating}
+                  ★ {product.rating.rate}
                 </span>
               </div>
 
@@ -110,7 +70,6 @@ const Favouritproducts = ({ onAdd }) => {
 
                 <button
                   type="button"
-                  onClick={() => onAdd?.(product)}
                   aria-label={`Add ${product.name} to cart`}
                   className="cursor-pointer"
                 >

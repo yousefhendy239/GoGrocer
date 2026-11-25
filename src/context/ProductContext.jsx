@@ -29,6 +29,12 @@ const ProductContext = ({ children }) => {
 
   const getProductById = (id) => products.find((p) => p.id === Number(id));
 
+  const getHighestRatedProducts = [...products]
+    .sort((a, b) => b.price - a.price)
+    .slice(0, 4);
+
+  const getCategories = [...new Set(products.map((p) => p.category))];
+
   // تجيب منتجات مشابهة (من نفس القسم الأول، وبعدين أي منتجات تانية)
   const getRelatedProducts = (id, limit = 4) => {
     const current = getProductById(id);
@@ -48,6 +54,8 @@ const ProductContext = ({ children }) => {
         productsLoading,
         getProductById,
         getRelatedProducts,
+        getHighestRatedProducts,
+        getCategories,
       }}
     >
       {children}
