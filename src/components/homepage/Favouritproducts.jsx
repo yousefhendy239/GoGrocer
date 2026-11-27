@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { ProductsMainContext } from "../../context/ProductContext";
 import { Link } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
+import { FiPlus } from "react-icons/fi";
 
 const Favouritproducts = () => {
   const { getHighestRatedProducts } = useContext(ProductsMainContext);
@@ -24,62 +26,63 @@ const Favouritproducts = () => {
           See all products →
         </Link>
       </div>
-
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
         {getHighestRatedProducts.map((product) => (
-          <div
+          <article
             key={product.id}
-            className="group rounded-[26px] border border-border bg-surface p-2 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+            className="rounded-2xl border border-border bg-surface p-2 shadow-sm"
           >
-            <div className="relative aspect-[1.15] overflow-hidden rounded-[22px] bg-white p-4">
-              {product.badge && (
-                <span className="absolute left-3 top-3 z-10 rounded-full bg-background px-3 py-1 text-xs font-bold text-text-primary">
-                  {product.badge}
-                </span>
-              )}
-
+            <Link
+              to={`/products/${product.id}`}
+              className="relative block aspect-square overflow-hidden rounded-xl bg-white"
+            >
               <img
                 src={product.image}
                 alt={product.title}
-                className="h-full w-full transition duration-500 group-hover:scale-105"
+                loading="lazy"
+                className="size-full object-contain p-4"
               />
-            </div>
 
-            <div className="px-2 pb-2 pt-4">
-              <div className="mb-2 flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-text-secondary">
-                  {product.category}
+              {product.badge && (
+                <span className="absolute left-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-semibold uppercase text-brand-primary shadow-sm">
+                  {product.badge}
                 </span>
+              )}
+            </Link>
 
-                <span className="text-xs font-bold text-brand-accent">
-                  ★ {product.rating.rate}
+            <div className="space-y-1 px-2 pb-2 pt-3">
+              <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-wide text-text-secondary">
+                <span className="truncate text-md">{product.category}</span>
+
+                <span className="flex items-center gap-1 text-star">
+                  <FaStar className="size-2.5" />
+                  {product.rating.rate}
                 </span>
               </div>
 
-              <h3 className="text-lg font-extrabold text-text-primary">
-                {product.name}
+              <h3 className="line-clamp-1 text-md font-medium text-text-primary">
+                <Link
+                  to={`/products/${product.id}`}
+                  className="hover:underline"
+                >
+                  {product.title}
+                </Link>
               </h3>
 
-              <div className="mt-3 flex items-center justify-between">
-                <p className="font-extrabold text-text-primary">
-                  ${product.price.toFixed(2)}
-                  <span className="ml-1 text-xs font-normal text-text-secondary">
+              <div className="flex items-center justify-between pt-1">
+                <p className="text-lg font-bold text-text-primary">
+                  ${product.price.toFixed(2)}{" "}
+                  <span className="text-[10px] font-normal text-text-secondary">
                     / {product.unit}
                   </span>
                 </p>
 
-                <button
-                  type="button"
-                  aria-label={`Add ${product.name} to cart`}
-                  className="cursor-pointer"
-                >
-                  <span className="grid h-10 w-10 place-items-center rounded-full bg-brand-primary text-2xl text-white transition hover:scale-110">
-                    +
-                  </span>
+                <button className="flex size-8 items-center justify-center rounded-full bg-brand-primary text-white transition hover:opacity-90">
+                  <FiPlus className="size-4" />
                 </button>
               </div>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>

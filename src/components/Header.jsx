@@ -1,8 +1,16 @@
+import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
-import { IoCartSharp, IoPersonCircleSharp } from "react-icons/io5";
+import {
+  IoCartSharp,
+  IoPersonCircleSharp,
+  IoMenu,
+  IoClose,
+} from "react-icons/io5";
 
 const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const links = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/products" },
@@ -28,12 +36,13 @@ const Header = () => {
               <path d="M3 21c4-7 8-10 14-13" />
             </svg>
           </span>
+
           <span className="text-2xl font-extrabold tracking-tight text-text-primary">
             go<span className="text-brand-accent">grocer</span>
           </span>
         </Link>
 
-        {/* Navigation */}
+        {/* Desktop Navigation */}
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((link) => (
             <NavLink
@@ -70,8 +79,40 @@ const Header = () => {
           </Link>
 
           <ThemeToggle />
+
+          {/* Hamburger Button - Mobile */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="rounded-full p-2 text-2xl text-text-primary transition hover:bg-section-bg md:hidden"
+            aria-label="Toggle navigation menu"
+          >
+            {menuOpen ? <IoClose /> : <IoMenu />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {menuOpen && (
+        <nav className="flex flex-col gap-2 border-t border-border bg-background px-5 py-4 lg:hidden">
+          {links.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === "/"}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `rounded-lg px-4 py-3 text-sm font-bold transition-colors ${
+                  isActive
+                    ? "bg-brand-primary/10 text-brand-primary"
+                    : "text-text-secondary hover:bg-section-bg hover:text-brand-primary"
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </header>
   );
 };
