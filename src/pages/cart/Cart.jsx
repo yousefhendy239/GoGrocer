@@ -1,7 +1,15 @@
+import { useContext } from "react";
+import { CartMainContext } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiPlus, FiMinus, FiTrash2 } from "react-icons/fi";
 
-const Cart = ({ cartItems = [], updateQuantity, removeFromCart }) => {
+const Cart = () => {
+  const {
+    cartItems,
+    updateQuantity,
+    removeFromCart,
+  } = useContext(CartMainContext);
+  
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
